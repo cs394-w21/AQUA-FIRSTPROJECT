@@ -1,0 +1,19 @@
+{
+  "users": {
+    "1x2y3z": {
+      "firstName": "Tom",
+      "lastName": "Smith",
+      "gender": "male",
+      "weight": 200,
+      "weightUnit": "lbs",
+      "activityLevel": "sedentary",
+      "age": 20,
+      "log": {
+        "food": "banana",
+        "time": "2021-01-2T18:25:43.511Z",
+        "quantity": 1,
+        "quantityUnit": "oz"
+      }
+    }
+  }
+}
