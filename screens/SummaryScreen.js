@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { firebase } from "../firebase.js";
 import { StyleSheet, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import RequestFoodData from "../utils/nutritionix";
 
 const SummaryScreen = () => {
+  RequestFoodData('Apple');
   const [log, setLog] = useState({ log: [] });
   useEffect(() => {
     const db = firebase.database().ref("users/1x2y3z/log");
