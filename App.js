@@ -1,21 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import SummaryScreen from "./screens/SummaryScreen";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Team Aqua!!!!!!</Text>
-      <StatusBar style="auto"/>
-    </View>
-  );
-}
+const App = () => {
+  return <SummaryScreen />;
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#00ffff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+export default App;
