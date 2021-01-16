@@ -1,5 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { firebase } from "../firebase.js";
+
+
+
+const getFood = async () => {
+  fetch('https://api.nal.usda.gov/fdc/v1/foods/search?api_key=utEsABLIQ0bCVRd3z3GvZ0x6LVcRZg8zhrG3iFJH&pageSize=15&query=Banana')  
+  .then(function(response) {
+    console.log(response.json());
+  })
+}
+
+export default getFood;
+
+
+/*
 const nutritionix = require("nutritionix-api");
 const RequestFoodData = (food) => {
   const [admin, setAdmin] = useState(null);
@@ -23,3 +37,4 @@ const RequestFoodData = (food) => {
 }
 
 export default RequestFoodData;
+*/
