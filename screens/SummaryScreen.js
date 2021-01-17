@@ -6,26 +6,42 @@ import fetchFood from "../utils/usda";
 
 const SummaryScreen = () => {
   const [foodResult, setFoodResult] = useState(null);
+  const [admin, setAdmin] = useState(null);
 
-  const [log, setLog] = useState({ log: [] });
+  const [log, setLog] = useState(null);
+
   useEffect(() => {
     const db = firebase.database().ref("users/1x2y3z/log");
-    db.on(
-      "value",
-      (snap) => {
-        if (snap.val()) setLog(snap.val());
-      },
-      (error) => console.log(error)
-    );
+    const handleData = (snap) => {
+      if (snap.val()) setLog(snap.val());
+    };
+    db.on("value", handleData, (error) => console.log(error));
     return () => {
       db.off("value", handleData);
     };
   }, []);
-  fetchFood(foodResult, setFoodResult);
+  useEffect(() => {
+    const db = firebase.database().ref("admin");
+    const handleData = (snap) => {
+      if (snap.val()) {
+        setAdmin(snap.val());
+      }
+    };
+    db.on("value", handleData, (error) => console.log(error));
+    return () => {
+      db.off("value", handleData);
+    };
+  }, []);
+  if (admin && log) {
+    fetchFood(foodResult, setFoodResult, admin.apikey, log.food);
+  }
+
   return (
     <View style={styles.container}>
-      <Text>You ate: {foodResult == null ? "" : foodResult.foods['0'].description}</Text>
-      <StatusBar style="auto"/>
+      <Text>
+        You ate: {foodResult == null ? "" : foodResult.foods["0"].description}
+      </Text>
+      <StatusBar style="auto" />
     </View>
   );
 };
