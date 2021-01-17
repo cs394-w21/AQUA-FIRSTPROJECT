@@ -1,16 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { firebase } from "../firebase.js";
-
-
-
 const getFood = async () => {
-  fetch('https://api.nal.usda.gov/fdc/v1/foods/search?api_key=utEsABLIQ0bCVRd3z3GvZ0x6LVcRZg8zhrG3iFJH&pageSize=15&query=Banana')  
-  .then(function(response) {
-    console.log(response.json());
+  const result = await fetch('https://api.nal.usda.gov/fdc/v1/foods/search?api_key=utEsABLIQ0bCVRd3z3GvZ0x6LVcRZg8zhrG3iFJH&pageSize=15&query=362759') 
+  return result;
+}
+
+const fetchFood = async function (foodResult, setFoodResult) {
+  getFood().then((value) => {
+    return value.json();
+  }).then((value) => {
+    if (foodResult == null) {
+      console.log(value);
+      setFoodResult(value);
+    }
   })
 }
 
-export default getFood;
+export default fetchFood;
+
+
+
 
 
 /*
