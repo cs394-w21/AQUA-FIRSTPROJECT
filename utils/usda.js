@@ -7,18 +7,37 @@ const getFood = async (apikey, foodId) => {
         foodId
     );
     return result;
+  } else {
+    console.log("get food failed");
   }
 };
 
-const fetchFood = async function (foodResult, setFoodResult, apikey, foodId) {
+const fetchFood = async function (
+  foodResults,
+  setFoodResults,
+  foodResult,
+  setFoodResult,
+  apikey,
+  foodId,
+  stopper,
+  setStopper
+) {
+  console.log("calling fetch food ...");
   getFood(apikey, foodId)
     .then((value) => {
       return value.json();
     })
     .then((value) => {
       if (foodResult == null) {
-        console.log(value);
         setFoodResult(value);
+        const tempResults = foodResults.concat(value);
+        if (stopper == null) {
+          setFoodResults(tempResults);
+          setStopper(true);
+          console.log("success");
+        }
+      } else {
+        console.log("it was null");
       }
     });
 };
