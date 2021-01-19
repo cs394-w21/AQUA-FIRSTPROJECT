@@ -51,7 +51,7 @@ const SummaryScreen = () => {
 
   return (
     <View style={styles.container}>
-      <WeeklyMacroChart />
+      <WeeklyMacroChart foodResults={ foods } />
     </View>
   );
 };
