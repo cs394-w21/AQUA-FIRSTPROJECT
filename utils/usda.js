@@ -6,42 +6,11 @@ const getFood = async (apikey, foodId) => {
         `&pageSize=15&query=` +
         foodId
     );
-    return result;
+    return result.json();
   } else {
-    console.log("get food failed");
+    console.log("Error: Key Undefined OR FoodID Invalid");
   }
 };
-
-const fetchFoods = async function (
-  foodResults,
-  setFoodResults,
-  foodResult,
-  setFoodResult,
-  apikey,
-  log,
-  stopper,
-  setStopper
-) {
-  console.log("calling fetch foods ...");
-  Promise.all(
-    Object.keys(log["foods"]).map((food) =>
-      getFood(apikey, log["foods"][food]).then((value) => {
-        return value.json();
-      })
-    )
-  ).then((value) => {
-    if (foodResult == null) {
-      setFoodResult(value);
-      const tempResults = foodResults.concat(value);
-      if (stopper == null) {
-        setFoodResults(tempResults);
-        setStopper(true);
-        console.log("success");
-      }
-    } else {
-      console.log("it was null");
-    }
-  });
+export const fetchFoods = async (apikey, list) => {
+  return Promise.all(list.map((foodId) => getFood(apikey, foodId)));
 };
-
-export default fetchFoods;
