@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-
 import { firebase } from "../firebase.js";
 import { StyleSheet, View, Text } from "react-native";
 import { fetchFoods } from "../utils/usda";
 import WeeklyMacroChart from "../components/WeeklyMacroChart";
+import VitaminsAndMinerals from "../components/VitaminsAndMinerals";
+import theme from "../utils/theme";
 
 const SummaryScreen = () => {
   const [admin, setAdmin] = useState(null);
@@ -52,7 +53,10 @@ const SummaryScreen = () => {
   return (
     <View style={styles.container}>
       {log && foods ? (
-        <WeeklyMacroChart log={log} foodResults={foods} />
+        <>
+          <WeeklyMacroChart log={log} foodResults={foods} />
+          <VitaminsAndMinerals log={log} foodResults={foods} />
+        </>
       ) : (
         <Text>Loading...</Text>
       )}
@@ -63,7 +67,7 @@ const SummaryScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: theme.cream,
     alignItems: "center",
     justifyContent: "center",
   },
