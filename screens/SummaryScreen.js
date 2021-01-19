@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { firebase } from "../firebase.js";
 import { StyleSheet, View, Text } from "react-native";
 import { fetchFoods } from "../utils/usda";
-import WeeklyMacroChart from "../components/WeeklyMarcoChart";
+import WeeklyMacroChart from "../components/WeeklyMacroChart";
 
 const SummaryScreen = () => {
   const [admin, setAdmin] = useState(null);
@@ -40,7 +40,7 @@ const SummaryScreen = () => {
 
   useEffect(() => {
     if (admin && log) {
-      const built = Object.keys(log["foods"]).map((food) => log.foods[food].fdcId);
+      const built = Object.keys(log.foods).map((food) => log.foods[food].fdcId);
       fetchFoods(admin.apikey, built).then((value) => {
         if (!foods) {
           setFoods(value);
@@ -51,7 +51,11 @@ const SummaryScreen = () => {
 
   return (
     <View style={styles.container}>
-    {!foods ? <Text> Loading </Text> : <WeeklyMacroChart foodResults={ foods } />}
+      {log && foods ? (
+        <WeeklyMacroChart log={log} foodResults={foods} />
+      ) : (
+        <Text>Loading...</Text>
+      )}
     </View>
   );
 };
