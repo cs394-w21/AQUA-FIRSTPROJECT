@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { firebase } from "../firebase.js";
 import { StyleSheet, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import fetchFood from "../utils/usda";
+import fetchFoods from "../utils/usda";
 
 import { StackedBarChart, Grid } from "react-native-svg-charts";
 
@@ -91,19 +91,16 @@ const SummaryScreen = () => {
   }, []);
   useEffect(() => {
     if (admin && log) {
-      Object.keys(log["foods"]).map((food) => {
-        console.log(log.foods[food]);
-        fetchFood(
-          foodResults,
-          setFoodResults,
-          foodResult,
-          setFoodResult,
-          admin.apikey,
-          log.foods[food],
-          stopper,
-          setStopper
-        );
-      });
+      fetchFoods(
+        foodResults,
+        setFoodResults,
+        foodResult,
+        setFoodResult,
+        admin.apikey,
+        log,
+        stopper,
+        setStopper
+      );
     }
   }, [admin, log]);
 
