@@ -40,18 +40,17 @@ const dailySumming = (log, foodResults) => {
         const nutrients =
           foodResults[findIdInFoodResults(logItem.fdcId, foodResults)].foods[0]
             .foodNutrients;
-
         return {
-          protein: nutrients[PROTEIN].value * PROTEIN_CAL,
-          fat: nutrients[FAT].value * FAT_CAL,
-          carb: nutrients[CARB].value * CARB_CAL,
+          protein: nutrients[PROTEIN].value * PROTEIN_CAL * logItem.grams,
+          fat: nutrients[FAT].value * FAT_CAL * logItem.grams,
+          carb: nutrients[CARB].value * CARB_CAL * logItem.grams,
         };
       })
       .reduce(
         (total, logItem) => {
           return {
             protein: total.protein + logItem.protein,
-            carbohydrate: total.carbohydrate + logItem.carbohydrate,
+            carbohydrate: total.carbohydrate + logItem.carb,
             fat: total.fat + logItem.fat,
           };
         },
@@ -62,7 +61,6 @@ const dailySumming = (log, foodResults) => {
         }
       );
   });
-
   return data;
 };
 export default dailySumming;
