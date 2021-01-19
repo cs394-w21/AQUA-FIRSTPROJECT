@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { StackedBarChart } from "react-native-svg-charts";
-
+import dailySumming from "../utils/dailySumming";
 
 const WeeklyMacroChart = ({ foodResults }) => {
   //console.log("you should see a chart");
   //console.log(foodResult.foods["0"]);
   //foodResult.foods[“0”].foodNutrients[“0”].value
   //console.log(foodResults[0].foods["0"].description, foodResults[0].foods["0"].foodNutrients["0"].value);
+  dailySumming();
   const data = [
     {
       protein: foodResults[0].foods["0"].foodNutrients["0"].value,
