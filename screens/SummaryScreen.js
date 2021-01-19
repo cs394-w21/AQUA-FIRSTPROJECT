@@ -40,7 +40,7 @@ const SummaryScreen = () => {
 
   useEffect(() => {
     if (admin && log) {
-      const built = Object.keys(log["foods"]).map((food) => log.foods[food]);
+      const built = Object.keys(log["foods"]).map((food) => log.foods[food].fdcId);
       fetchFoods(admin.apikey, built).then((value) => {
         if (!foods) {
           setFoods(value);
@@ -51,7 +51,7 @@ const SummaryScreen = () => {
 
   return (
     <View style={styles.container}>
-      <WeeklyMacroChart foodResults={ foods } />
+    {!foods ? <Text> Loading </Text> : <WeeklyMacroChart foodResults={ foods } />}
     </View>
   );
 };
