@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { firebase } from "../firebase.js";
-import { StyleSheet, Text, View } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import fetchFood from "../utils/usda";
+import React, { useState, useEffect } from 'react';
 
-import { StackedBarChart, Grid } from "react-native-svg-charts";
+import { firebase } from '../firebase.js';
+import { StyleSheet, View, Text } from 'react-native';
+import { takeFood } from '../utils/usda';
+import { StackedBarChart } from "react-native-svg-charts";
 
 const WeeklyMacroChart = () => {
   //console.log("you should see a chart");
@@ -12,34 +11,28 @@ const WeeklyMacroChart = () => {
   //foodResult.foods[“0”].foodNutrients[“0”].value
   const data = [
     {
-      //month: new Date(2015, 0, 1),
       protein: 1920,
       carbohydrates: 960,
       fat: 400,
     },
     {
-      //month: new Date(2015, 1, 1),
       protein: 1600,
       carbohydrates: 1440,
       fat: 960,
     },
     {
-      //month: new Date(2015, 2, 1),
       protein: 640,
       carbohydrates: 960,
       fat: 3640,
     },
     {
-      //month: new Date(2015, 3, 1),
       protein: 3320,
       carbohydrates: 480,
       fat: 640,
     },
   ];
-
   const colors = ["#FFC09F", "#FFD799", "#FFEE93"];
   const keys = ["protein", "carbohydrates", "fat"];
-
   return (
     <View>
       <Text>Weekly Summary</Text>
@@ -55,17 +48,11 @@ const WeeklyMacroChart = () => {
     </View>
   );
 };
-
 const SummaryScreen = () => {
-  const [foodResults, setFoodResults] = useState([]);
-  const [foodResult, setFoodResult] = useState(null);
   const [admin, setAdmin] = useState(null);
   const [log, setLog] = useState(null);
-  const [stopper, setStopper] = useState(null);
+  const [foods, setFoods] = useState(null);
 
-  useEffect(() => {
-    console.log("Here is food results", foodResults);
-  }, [foodResults]);
   useEffect(() => {
     const db = firebase.database().ref("users/1x2y3z/log");
     const handleData = (snap) => {
@@ -76,6 +63,7 @@ const SummaryScreen = () => {
       db.off("value", handleData);
     };
   }, []);
+
   useEffect(() => {
     const db = firebase.database().ref("admin");
     const handleData = (snap) => {
@@ -88,35 +76,25 @@ const SummaryScreen = () => {
       db.off("value", handleData);
     };
   }, []);
+
+  useEffect(()=> {
+    console.log("Foods:", foods);
+  },[foods])
+
   useEffect(() => {
     if (admin && log) {
-      Object.keys(log["foods"]).map((food) => {
-        console.log(log.foods[food]);
-        fetchFood(
-          foodResults,
-          setFoodResults,
-          foodResult,
-          setFoodResult,
-          admin.apikey,
-          log.foods[food],
-          stopper,
-          setStopper
-        );
-      });
+      const built = Object.keys(log['foods']).map(food => JSON.stringify(log.foods[food]));
+      takeFood(admin.apikey, built).then(value => {
+        if (!foods) {
+          setFoods(value);
+        }
+      })
     }
-  }, [admin, log]);
+  }, [admin, log]); 
 
   return (
     <View style={styles.container}>
-      <WeeklyMacroChart />
-      <Text>
-        You ate:{" "}
-        {
-          foodResults.length == 0 ? "haha" : "a food"
-          //: foodResults[1].foods["0"].description}
-        }
-      </Text>
-      <StatusBar style="auto" />
+      <WeeklyMacroChart></WeeklyMacroChart>
     </View>
   );
 };
