@@ -6,16 +6,17 @@ import fetchFood from "../utils/usda";
 
 import { StackedBarChart, Grid } from "react-native-svg-charts";
 
-const WeeklyMacroChart = () => {
+const WeeklyMacroChart = ({ foodResults }) => {
   //console.log("you should see a chart");
   //console.log(foodResult.foods["0"]);
-  //foodResult.foods[“0”].foodNutrients[“0”].value
+  //foodResults[0].foods[“0”].foodNutrients[“0”].value
+  console.log(foodResults[0].foods["0"].description, foodResults[0].foods["0"].foodNutrients["0"].value);
   const data = [
     {
       //month: new Date(2015, 0, 1),
-      protein: 1920,
-      carbohydrates: 960,
-      fat: 400,
+      protein: float(foodResults[0].foods["0"].foodNutrients["0"].value),
+      carbohydrates: foodResults[0].foods["0"].foodNutrients["2"].value,
+      fat: foodResults[0].foods["0"].foodNutrients["1"].value,
     },
     {
       //month: new Date(2015, 1, 1),
@@ -108,7 +109,7 @@ const SummaryScreen = () => {
 
   return (
     <View style={styles.container}>
-      <WeeklyMacroChart />
+      {foodResults.length == 0 ? <Text> Loading </Text> : <WeeklyMacroChart foodResults={foodResults} />}
       <Text>
         You ate:{" "}
         {
