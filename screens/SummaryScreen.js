@@ -6,6 +6,8 @@ import WeeklyMacroChart from "../components/WeeklyMacroChart";
 import VitaminsAndMinerals from "../components/VitaminsAndMinerals";
 import theme from "../utils/theme";
 
+
+
 const SummaryScreen = () => {
   const [admin, setAdmin] = useState(null);
   const [log, setLog] = useState(null);

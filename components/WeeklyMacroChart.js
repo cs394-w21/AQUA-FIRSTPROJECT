@@ -1,19 +1,18 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { View, Text } from "react-native";
 import { StackedBarChart, XAxis } from "react-native-svg-charts";
 import dailySumming from "../utils/dailySumming";
 import theme from "../utils/theme";
 
 const WeeklyMacroChart = ({ log, foodResults }) => {
   const data = dailySumming(log, foodResults);
-  //console.log(data);
   const colors = [theme.red, theme.orange, theme.darkYellow];
   const keys = ["protein", "carbohydrate", "fat"];
   const contentInset = { top: 30, bottom: 10 };
   return (
     <View>
       <Text>Weekly Summary</Text>
-      <div>
+      <View>
         <StackedBarChart
           style={{ height: 200, flex: 1}}
           animate={false}
@@ -33,7 +32,7 @@ const WeeklyMacroChart = ({ log, foodResults }) => {
               fontSize: 10,
           }}
         />
-      </div>
+      </View>
     </View>
   );
 };
