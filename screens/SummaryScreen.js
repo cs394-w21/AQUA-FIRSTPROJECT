@@ -51,6 +51,7 @@ const SummaryScreen = () => {
       //console.log(getFood(admin.apikey, "milk"));
     }
   }, [admin, log]);
+  const hardcoded_deficiencies = ["Vitamin A", "Vitamin C", "Iron"];
 
   return (
     <View style={styles.container}>
@@ -61,7 +62,7 @@ const SummaryScreen = () => {
           </View>
           <WeeklyMacroChart log={log} foodResults={foods} />
           <VitaminsAndMinerals log={log} foodResults={foods} />
-          <Recommendations />
+          <Recommendations deficiencies={hardcoded_deficiencies} />
         </>
       ) : (
         <Text>Loading...</Text>
