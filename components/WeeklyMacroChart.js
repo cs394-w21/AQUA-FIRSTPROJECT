@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { StackedBarChart, XAxis } from "react-native-svg-charts";
+import { StackedBarChart, XAxis, YAxis } from "react-native-svg-charts";
 import dailySumming from "../utils/dailySumming";
 import theme from "../utils/theme";
 
@@ -13,15 +13,30 @@ const WeeklyMacroChart = ({ log, foodResults }) => {
     <View>
       <Text>Weekly Summary</Text>
       <View>
-        <StackedBarChart
-          style={{ height: 200, flex: 1}}
-          animate={false}
-          keys={keys}
-          colors={colors}
+        <View style={{flexDirection: 'row'}}>
+          <YAxis
           data={data}
-          showGrid={false}
+          min={0}
+          max={60}
+          numberOfTicks={4}
           contentInset={contentInset}
-        />
+          svg={{
+            fill: 'grey',
+            fontSize: 10
+          }}
+          >
+          </YAxis>
+          <StackedBarChart
+
+            style={{ height: 200, flex: 1, width: 200}}
+            animate={false}
+            keys={keys}
+            colors={colors}
+            data={data}
+            showGrid={true}
+            contentInset={contentInset}
+          />
+        </View>
         <XAxis
           //style={{ flex: 1}}
           data={data}
@@ -32,6 +47,7 @@ const WeeklyMacroChart = ({ log, foodResults }) => {
               fontSize: 10,
           }}
         />
+        
       </View>
     </View>
   );

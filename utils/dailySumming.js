@@ -45,9 +45,9 @@ const dailySumming = (log, foodResults) => {
         let currDay = new Date(logItem.time);
         //console.log(currDay.getDate());
         return {
-          protein: nutrients[PROTEIN].value * PROTEIN_CAL * logItem.grams,
-          fat: nutrients[FAT].value * FAT_CAL * logItem.grams,
-          carb: nutrients[CARB].value * CARB_CAL * logItem.grams,
+          protein: nutrients[PROTEIN].value * PROTEIN_CAL * logItem.grams / 100,
+          fat: nutrients[FAT].value * FAT_CAL * logItem.grams / 100,
+          carb: nutrients[CARB].value * CARB_CAL * logItem.grams / 100,
           date: currDay.getDate(),
         };
       })
@@ -68,7 +68,7 @@ const dailySumming = (log, foodResults) => {
         }
       );
   });
-  console.log(data);
+  console.log("Here are the sums in calories:", data.map((row)=> row.protein + row.carbohydrate + row.fat));
   return data;
 };
 export default dailySumming;
