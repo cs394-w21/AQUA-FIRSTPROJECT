@@ -6,11 +6,13 @@ import WeeklyMacroChart from "../components/WeeklyMacroChart";
 import VitaminsAndMinerals from "../components/VitaminsAndMinerals";
 import theme from "../utils/theme";
 import Recommendations from "../components/Recommendations.js";
+import dailySumming from "../utils/dailySumming";
 
 const SummaryScreen = () => {
   const [admin, setAdmin] = useState(null);
   const [log, setLog] = useState(null);
   const [foods, setFoods] = useState(null);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     const db = firebase.database().ref("users/1x2y3z/log");
@@ -51,18 +53,24 @@ const SummaryScreen = () => {
       //console.log(getFood(admin.apikey, "milk"));
     }
   }, [admin, log]);
-  const hardcoded_deficiencies = ["Vitamin A", "Vitamin C", "Iron"];
+
+  useEffect(() => {
+    if (log && foods) {
+      setData(dailySumming(log, foods));
+    }
+  }, [log, foods]);
 
   return (
     <View style={styles.container}>
-      {log && foods ? (
+      {data ? (
         <>
           <View style={{ textAlign: "center" }}>
             <Text style={{ fontSize: 30 }}>Weekly Summary</Text>
           </View>
-          <WeeklyMacroChart log={log} foodResults={foods} />
-          <VitaminsAndMinerals log={log} foodResults={foods} />
-          <Recommendations deficiencies={hardcoded_deficiencies} />
+
+          <WeeklyMacroChart data={data} />
+          <VitaminsAndMinerals data={data} />
+          <Recommendations data={data} />
         </>
       ) : (
         <Text>Loading...</Text>

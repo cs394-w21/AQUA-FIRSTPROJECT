@@ -1,11 +1,9 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { StackedBarChart, XAxis, YAxis } from "react-native-svg-charts";
-import dailySumming from "../utils/dailySumming";
 import theme from "../utils/theme";
 
-const WeeklyMacroChart = ({ log, foodResults }) => {
-  const data = dailySumming(log, foodResults);
+const WeeklyMacroChart = ({ data }) => {
   const colors = [theme.red, theme.orange, theme.darkYellow];
   const keys = ["protein", "carbohydrate", "fat"];
   const contentInset = { top: 30, bottom: 10 };

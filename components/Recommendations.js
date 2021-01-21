@@ -1,8 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
-import dailySumming from "../utils/dailySumming";
 import theme from "../utils/theme";
-
+import { weeklySums, weeklyDeficiencies } from "../utils/dailySumming";
 const recs = {
   Calcium: (
     <Text
@@ -51,7 +50,9 @@ const recs = {
   ),
 };
 
-const Recommendations = ({ deficiencies }) => {
+const Recommendations = ({ data }) => {
+  const weeklyNutrients = weeklySums(data);
+  const deficiencies = weeklyDeficiencies(weeklyNutrients);
   return (
     <View style={styles.container}>
       <Text
@@ -59,7 +60,7 @@ const Recommendations = ({ deficiencies }) => {
       >
         Recommendations
       </Text>
-      {Object.values(deficiencies).map((deficiency) => {
+      {deficiencies.map((deficiency) => {
         return recs[deficiency];
       })}
     </View>
