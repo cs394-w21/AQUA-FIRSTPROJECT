@@ -13,22 +13,22 @@ const WeeklyMacroChart = ({ log, foodResults }) => {
     <View>
       <Text>Weekly Summary</Text>
       <View>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: "row" }}>
           <YAxis
-          data={data}
-          min={0}
-          max={60}
-          numberOfTicks={4}
-          contentInset={contentInset}
-          svg={{
-            fill: 'grey',
-            fontSize: 10
-          }}
-          >
-          </YAxis>
+            data={data}
+            min={0}
+            max={Math.max(
+              ...data.map((row) => row.protein + row.carbohydrate + row.fat)
+            )}
+            numberOfTicks={4}
+            contentInset={contentInset}
+            svg={{
+              fill: "grey",
+              fontSize: 10,
+            }}
+          ></YAxis>
           <StackedBarChart
-
-            style={{ height: 200, flex: 1, width: 200}}
+            style={{ height: 200, flex: 1, width: 200 }}
             animate={false}
             keys={keys}
             colors={colors}
@@ -43,11 +43,10 @@ const WeeklyMacroChart = ({ log, foodResults }) => {
           xAccessor={({ item }) => Math.floor(item.date)}
           contentInset={{ top: 5, bottom: 30, left: 7, right: 7 }}
           svg={{
-              fill: 'grey',
-              fontSize: 10,
+            fill: "grey",
+            fontSize: 10,
           }}
         />
-        
       </View>
     </View>
   );

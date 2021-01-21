@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { firebase } from "../firebase.js";
 import { StyleSheet, View, Text } from "react-native";
-import { fetchFoods } from "../utils/usda";
+import { getFood, fetchFoods } from "../utils/usda";
 import WeeklyMacroChart from "../components/WeeklyMacroChart";
 import VitaminsAndMinerals from "../components/VitaminsAndMinerals";
 import theme from "../utils/theme";
-
-
 
 const SummaryScreen = () => {
   const [admin, setAdmin] = useState(null);
@@ -49,6 +47,7 @@ const SummaryScreen = () => {
           setFoods(value);
         }
       });
+      //console.log(getFood(admin.apikey, "milk"));
     }
   }, [admin, log]);
 
