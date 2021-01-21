@@ -5,6 +5,7 @@ import { getFood, fetchFoods } from "../utils/usda";
 import WeeklyMacroChart from "../components/WeeklyMacroChart";
 import VitaminsAndMinerals from "../components/VitaminsAndMinerals";
 import theme from "../utils/theme";
+import Recommendations from "../components/Recommendations.js";
 
 const SummaryScreen = () => {
   const [admin, setAdmin] = useState(null);
@@ -55,8 +56,12 @@ const SummaryScreen = () => {
     <View style={styles.container}>
       {log && foods ? (
         <>
+          <View style={{ textAlign: "center" }}>
+            <Text style={{ fontSize: 30 }}>Weekly Summary</Text>
+          </View>
           <WeeklyMacroChart log={log} foodResults={foods} />
           <VitaminsAndMinerals log={log} foodResults={foods} />
+          <Recommendations />
         </>
       ) : (
         <Text>Loading...</Text>
@@ -70,7 +75,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.cream,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
   },
 });
 

@@ -10,8 +10,7 @@ const WeeklyMacroChart = ({ log, foodResults }) => {
   const keys = ["protein", "carbohydrate", "fat"];
   const contentInset = { top: 30, bottom: 10 };
   return (
-    <View>
-      <Text>Weekly Summary</Text>
+    <>
       <View>
         <View style={{ flexDirection: "row" }}>
           <YAxis
@@ -48,7 +47,7 @@ const WeeklyMacroChart = ({ log, foodResults }) => {
           }}
         />
       </View>
-    </View>
+    </>
   );
 };
 
