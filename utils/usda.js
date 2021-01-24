@@ -10,6 +10,16 @@ export const getFood = async (apikey, foodId) => {
     return result.json();
   } else {
     console.log("Error: Key Undefined OR FoodID Invalid");
+    return "This FAILED ;-;";
+  }
+};
+
+export const getFoodByFDCID = async (apikey, foodId) => {
+  if (apikey && foodId) {
+    const result = await fetch(
+      'https://api.nal.usda.gov/fdc/v1/food/' + foodId + '?api_key=' + apikey
+    );
+    return result.json();
   }
 };
 
