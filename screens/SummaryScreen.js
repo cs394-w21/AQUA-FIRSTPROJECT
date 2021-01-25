@@ -7,6 +7,7 @@ import VitaminsAndMinerals from "../components/VitaminsAndMinerals";
 import theme from "../utils/theme";
 import Recommendations from "../components/Recommendations.js";
 import dailySumming from "../utils/dailySumming";
+import { ScrollView } from "react-native-gesture-handler";
 
 const SummaryScreen = () => {
   const [admin, setAdmin] = useState(null);
@@ -61,7 +62,7 @@ const SummaryScreen = () => {
   }, [log, foods]);
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       {data ? (
         <>
           <View style={{ textAlign: "center" }}>
@@ -75,7 +76,7 @@ const SummaryScreen = () => {
       ) : (
         <Text>Loading...</Text>
       )}
-    </View>
+    </ScrollView>
   );
 };
 
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.cream,
     alignItems: "center",
-    justifyContent: "space-evenly",
+    //justifyContent: "space-evenly",
   },
 });
 

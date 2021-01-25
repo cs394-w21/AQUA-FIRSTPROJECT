@@ -8,6 +8,7 @@ const recs = {
       style={{
         margin: "10px",
       }}
+      key="calcium"
     >
       A long-term calcium deficiency can lead to dental changes, cataracts,
       alterations in the brain, and osteoporosis, which causes the bones to
@@ -21,6 +22,7 @@ const recs = {
       style={{
         margin: "10px",
       }}
+      key="iron"
     >
       An iron deficiency can cause shortness of breath, tiredness, and reduced
       concentration. Try eating beef, chicken, beans, tofu, cashews, or spinach.
@@ -31,6 +33,7 @@ const recs = {
       style={{
         margin: "10px",
       }}
+      key="vitamin a"
     >
       A vitamin A deficiency can lead to vision loss and blindness. Try eating
       leafy green vegetables, carrots, sweet potatoes, eggs, or cantaloupe.
@@ -41,6 +44,7 @@ const recs = {
       style={{
         margin: "10px",
       }}
+      key="vitamin c"
     >
       A vitamin C deficiency can lead to bleeding gums, frequent bruising and
       infections, poor wound healing, anemia, and scurvy. Try eating guavas,
