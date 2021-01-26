@@ -1,11 +1,20 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 import theme from "../utils/theme";
 import { weeklyDeficiencies, weeklySums } from "../utils/dailySumming";
 
 const Badge = ({ nutrient, deficient }) => {
   return (
     <View style={deficient ? styles.BadgeBad : styles.BadgeGood}>
+      {deficient ? (
+        <Image
+          style={{ height: 20, width: 20 }}
+          source={{
+            uri:
+              "https://www.pinclipart.com/picdir/middle/0-7013_caution-sign-clipart-png-download.png",
+          }}
+        />
+      ) : null}
       <Text>{nutrient}</Text>
     </View>
   );
@@ -35,11 +44,8 @@ const VitaminsAndMinerals = ({ data }) => {
 };
 
 const BadgeBase = {
-  minWidth: 40,
+  minWidth: 50,
   height: 30,
-  borderStyle: 'solid',
-  borderWidth: 1,
-  borderColor: `${theme.darkGreen}`,
   paddingLeft: "10px",
   paddingRight: "10px",
   borderRadius: 50,
@@ -47,6 +53,9 @@ const BadgeBase = {
   marginBottom: "5px",
   justifyContent: "space-evenly",
   textAlign: "center",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  alignItems: "center",
 };
 
 const styles = StyleSheet.create({

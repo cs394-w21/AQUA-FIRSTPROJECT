@@ -11,62 +11,37 @@ import {
 } from "react-native";
 import theme from "../utils/theme";
 import { Picker } from "@react-native-picker/picker";
-import { getFood, fetchFoods, getFoodByFDCID } from "../utils/usda";
+import { getFoodByFDCID } from "../utils/usda";
+import PortionSizes from "../components/PortionSizes";
 
-
-const PortionSizes = ({ idResult, portionSize, setPortionSize, gramValue, setGramValue }) => {
-  
-  const determinePortionOptions = () => {
-    if (idResult.foodPortions.length == 0) {
-      return [{"100 g": 100}];
-    }
-    const portions = Object.values(idResult.foodPortions).map((p) => {
-      if (!("portionDescription" in p)) {
-        let s = "" + p.amount + " " + p.modifier + "";
-        return {[s]: p.gramWeight};
-      } else if (p.portionDescription == "Quantity not specified") {
-        let s = "" + p.gramWeight + " g";
-        return {[s]: p.gramWeight};
-      } else {
-        let s = p.portionDescription;
-        return {[s]: p.gramWeight};
-      }
-    });
-    if (! portions.includes({"100 g": 100})) {
-      portions.push({"100 g": 100});
-    }
-    return portions;
-  };
-  const options = determinePortionOptions();
+const Quantity = ({ setQuantity }) => {
+  const [input, setInput] = useState(1);
   return (
-    <View>
-      <Picker
-        selectedValue={portionSize}
-        style={{ height: 50, width: 150 }}
-        onValueChange={(itemValue, itemIndex) => {
-          console.log(itemValue)
-          setGramValue(options[itemIndex][itemValue])
-          setPortionSize(itemValue)}
-        }
-
-      >
-        {options.map((value, idx) => {
-          return <Picker.Item label={Object.keys(value)[0]} value={Object.keys(value)[0]} key={idx} />
-        })}
-      </Picker>
-    </View>
+    <>
+      <Text>Qty:</Text>
+      <TextInput
+        style={styles.quantityInput}
+        onChangeText={(text) => {
+          setInput(text);
+          Number(text)
+            ? setQuantity(Number(text))
+            : alert("Please enter a number for the quantity.");
+        }}
+        value={input}
+        keyboardType={"number-pad"}
+      ></TextInput>
+    </>
   );
 };
 
-
 const FoodDetailScreen = ({ route }) => {
-
   const [portionSize, setPortionSize] = useState("100 g");
   const db = firebase.database().ref("users/1x2y3z/log");
   const naturalResult = route.params.result;
   const admin = route.params.admin;
   const [idResult, setIdResult] = useState(null);
-  const [gramValue, setGramValue] = useState(100);
+  const [gramsPerPortion, setGramsPerPortion] = useState(100);
+  const [quantity, setQuantity] = useState(1);
 
   const Banner = () => {
     return <Text>{naturalResult.description}</Text>;
@@ -77,22 +52,22 @@ const FoodDetailScreen = ({ route }) => {
 
     const obj = {
       fdcId: naturalResult.fdcId,
-      grams: gramValue,
-      quantity: 1,
+      grams: gramsPerPortion * quantity,
+      quantity: quantity,
       quantityUnit: portionSize,
-      time: date.toJSON()
-    }
+      time: date.toJSON(),
+    };
     console.log(obj);
     return obj;
-  }
+  };
 
   const writeToDb = () => {
     const foodsRef = db.child("foods");
     let newFoodRef = foodsRef.push();
     const newFood = buildDbObject();
     newFoodRef.set(newFood);
-
-  }
+    alert("Food successfully added!");
+  };
 
   useEffect(() => {
     console.log("this is idresult", idResult);
@@ -111,14 +86,17 @@ const FoodDetailScreen = ({ route }) => {
       <Banner />
       {naturalResult && idResult ? (
         <View>
+          <Quantity setQuantity={setQuantity} />
           <PortionSizes
             idResult={idResult}
             portionSize={portionSize}
             setPortionSize={setPortionSize}
-            gramValue = {gramValue}
-            setGramValue = {setGramValue}
-            />
-          <TouchableOpacity onPress={()=> writeToDb()}>
+            setGramValue={setGramsPerPortion}
+          />
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={() => writeToDb()}
+          >
             <Text>Add</Text>
           </TouchableOpacity>
         </View>
@@ -128,5 +106,28 @@ const FoodDetailScreen = ({ route }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  quantityInput: {
+    height: 40,
+    borderStyle: "solid",
+    borderWidth: 30,
+    borderColor: "gray",
+    borderRadius: 30,
+    borderWidth: 1,
+    textAlign: "center",
+    backgroundColor: "white",
+  },
+  addButton: {
+    height: 40,
+    borderStyle: "solid",
+    borderWidth: 30,
+    borderColor: "gray",
+    borderRadius: 30,
+    borderWidth: 1,
+    textAlign: "center",
+    backgroundColor: "white",
+  },
+});
 
 export default FoodDetailScreen;
