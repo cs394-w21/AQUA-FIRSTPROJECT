@@ -32,9 +32,14 @@ const NutritionDetails = ({
       </>
     );
   };
+  const brand = () => {
+    if (!idResult) return null;
+    if (!("brandOwner" in idResult)) return null;
+    return <Text>Brand: {idResult.brandOwner}</Text>;
+  };
   return idResult ? (
     <View>
-      <Text>Brand: {idResult.brandOwner}</Text>
+      {brand()}
       {nutrients()}
     </View>
   ) : null;
