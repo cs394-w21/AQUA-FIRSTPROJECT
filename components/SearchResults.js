@@ -8,7 +8,10 @@ const SearchResult = ({ result, toDetails }) => {
       style={styles.searchResult}
       onPress={() => toDetails(result)}
     >
-      <Text>{result.description}</Text>
+      <Text>
+        {result.description}
+        {"brandOwner" in result ? ", " + result.brandOwner : null}
+      </Text>
     </TouchableOpacity>
   );
 };

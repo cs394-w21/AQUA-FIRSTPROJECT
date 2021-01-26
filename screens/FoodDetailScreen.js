@@ -60,7 +60,7 @@ const FoodDetailScreen = ({ route }) => {
   }, [naturalResult, admin]);
 
   return (
-    <View>
+    <ScrollView>
       <Banner />
       {naturalResult && idResult ? (
         <View>
@@ -77,12 +77,17 @@ const FoodDetailScreen = ({ route }) => {
           >
             <Text>Add</Text>
           </TouchableOpacity>
-          <NutritionDetails />
+          <NutritionDetails
+            idResult={idResult}
+            naturalResult={naturalResult}
+            gramsPerPortion={gramsPerPortion}
+            quantity={quantity}
+          />
         </View>
       ) : (
         <Text>Loading...</Text>
       )}
-    </View>
+    </ScrollView>
   );
 };
 
