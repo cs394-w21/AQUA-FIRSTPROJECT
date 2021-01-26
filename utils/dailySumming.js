@@ -38,7 +38,7 @@ const dailySumming = (log, foodResults) => {
     });
 
   const data = recentDates.map((currDate) => {
-    return log.foods
+    return Object.values(log.foods)
       .filter((logItem) => {
         let temp = new Date(logItem.time);
         let curr = new Date(currDate);
