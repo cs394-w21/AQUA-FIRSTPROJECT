@@ -4,35 +4,15 @@ import {
   StyleSheet,
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
 } from "react-native";
 import theme from "../utils/theme";
-import { Picker } from "@react-native-picker/picker";
 import { getFoodByFDCID } from "../utils/usda";
 import PortionSizes from "../components/PortionSizes";
-
-const Quantity = ({ setQuantity }) => {
-  const [input, setInput] = useState(1);
-  return (
-    <>
-      <Text>Qty:</Text>
-      <TextInput
-        style={styles.quantityInput}
-        onChangeText={(text) => {
-          setInput(text);
-          Number(text)
-            ? setQuantity(Number(text))
-            : alert("Please enter a number for the quantity.");
-        }}
-        value={input}
-        keyboardType={"number-pad"}
-      ></TextInput>
-    </>
-  );
-};
+import Quantity from "../components/Quantity";
+import NutritionDetails from "../components/NutritionDetails";
 
 const FoodDetailScreen = ({ route }) => {
   const [portionSize, setPortionSize] = useState("100 g");
@@ -63,9 +43,7 @@ const FoodDetailScreen = ({ route }) => {
 
   const writeToDb = () => {
     const foodsRef = db.child("foods");
-    let newFoodRef = foodsRef.push();
-    const newFood = buildDbObject();
-    newFoodRef.set(newFood);
+    foodsRef.push().set(buildDbObject());
     alert("Food successfully added!");
   };
 
@@ -108,16 +86,6 @@ const FoodDetailScreen = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
-  quantityInput: {
-    height: 40,
-    borderStyle: "solid",
-    borderWidth: 30,
-    borderColor: "gray",
-    borderRadius: 30,
-    borderWidth: 1,
-    textAlign: "center",
-    backgroundColor: "white",
-  },
   addButton: {
     height: 40,
     borderStyle: "solid",

@@ -1,17 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { firebase } from "../firebase.js";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  SafeAreaView,
-} from "react-native";
+import React from "react";
+import { StyleSheet, View, Text } from "react-native";
 import theme from "../utils/theme";
 import { Picker } from "@react-native-picker/picker";
-import { getFoodByFDCID } from "../utils/usda";
 
 const PortionSizes = ({
   idResult,
@@ -36,11 +26,11 @@ const PortionSizes = ({
       }
     });
     if (!portions.includes({ "100 g": 100 })) {
-      portions.push({ "100 g": 100 });
+      portions.unshift({ "100 g": 100 });
     }
     return portions;
   };
-  const options = determinePortionOptions();
+  const portions = determinePortionOptions();
   return (
     <View>
       <Text>Portion Size:</Text>
@@ -48,12 +38,11 @@ const PortionSizes = ({
         selectedValue={portionSize}
         style={{ height: 50, width: 150 }}
         onValueChange={(itemValue, itemIndex) => {
-          console.log(itemValue);
-          setGramValue(options[itemIndex][itemValue]);
+          setGramValue(portions[itemIndex][itemValue]);
           setPortionSize(itemValue);
         }}
       >
-        {options.map((value, idx) => {
+        {portions.map((value, idx) => {
           return (
             <Picker.Item
               label={Object.keys(value)[0]}
