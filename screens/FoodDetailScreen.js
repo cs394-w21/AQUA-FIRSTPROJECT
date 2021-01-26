@@ -69,7 +69,7 @@ const FoodDetailScreen = ({ route }) => {
             idResult={idResult}
             portionSize={portionSize}
             setPortionSize={setPortionSize}
-            setGramValue={setGramsPerPortion}
+            setGramsPerPortion={setGramsPerPortion}
           />
           <TouchableOpacity
             style={styles.addButton}
@@ -77,6 +77,7 @@ const FoodDetailScreen = ({ route }) => {
           >
             <Text>Add</Text>
           </TouchableOpacity>
+          <NutritionDetails />
         </View>
       ) : (
         <Text>Loading...</Text>

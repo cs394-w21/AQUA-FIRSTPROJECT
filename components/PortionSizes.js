@@ -7,7 +7,7 @@ const PortionSizes = ({
   idResult,
   portionSize,
   setPortionSize,
-  setGramValue,
+  setGramsPerPortion,
 }) => {
   const determinePortionOptions = () => {
     if (idResult.foodPortions.length == 0) {
@@ -38,7 +38,7 @@ const PortionSizes = ({
         selectedValue={portionSize}
         style={{ height: 50, width: 150 }}
         onValueChange={(itemValue, itemIndex) => {
-          setGramValue(portions[itemIndex][itemValue]);
+          setGramsPerPortion(portions[itemIndex][itemValue]);
           setPortionSize(itemValue);
         }}
       >
