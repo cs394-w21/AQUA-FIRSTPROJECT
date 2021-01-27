@@ -5,7 +5,7 @@ import theme from "../utils/theme";
 const Quantity = ({ setQuantity }) => {
   const [input, setInput] = useState(1);
   return (
-    <>
+    <View>
       <Text>Qty:</Text>
       <TextInput
         style={styles.quantityInput}
@@ -18,19 +18,21 @@ const Quantity = ({ setQuantity }) => {
         value={input}
         keyboardType={"number-pad"}
       ></TextInput>
-    </>
+    </View>
   );
 };
 const styles = StyleSheet.create({
   quantityInput: {
-    height: 40,
+    width: 70,
+    height: 30,
     borderStyle: "solid",
     borderWidth: 30,
     borderColor: "gray",
-    borderRadius: 30,
+    borderRadius: 10,
     borderWidth: 1,
     textAlign: "center",
     backgroundColor: "white",
+    marginTop: 5,
   },
 });
 

@@ -29,7 +29,7 @@ const FoodDetailScreen = ({ route }) => {
   const [quantity, setQuantity] = useState(1);
 
   const Banner = () => {
-    return <Text>{naturalResult.description}</Text>;
+    return <Text style={styles.banner}>{naturalResult.description}</Text>;
   };
 
   const buildDbObject = () => {
@@ -63,22 +63,24 @@ const FoodDetailScreen = ({ route }) => {
   }, [naturalResult, admin]);
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={styles.container}>
       <Banner />
       {naturalResult && idResult ? (
         <View>
-          <Quantity setQuantity={setQuantity} />
-          <PortionSizes
-            idResult={idResult}
-            portionSize={portionSize}
-            setPortionSize={setPortionSize}
-            setGramsPerPortion={setGramsPerPortion}
-          />
+          <View style={styles.inputs}>
+            <Quantity setQuantity={setQuantity} />
+            <PortionSizes
+              idResult={idResult}
+              portionSize={portionSize}
+              setPortionSize={setPortionSize}
+              setGramsPerPortion={setGramsPerPortion}
+            />
+            </View>
           <TouchableOpacity
             style={styles.addButton}
             onPress={() => writeToDb()}
           >
-            <Text>Add</Text>
+            <Text style={{fontSize: 15}}>Add</Text>
           </TouchableOpacity>
           <NutritionDetails
             idResult={idResult}
@@ -99,15 +101,35 @@ const FoodDetailScreen = ({ route }) => {
 
 const styles = StyleSheet.create({
   addButton: {
-    height: 40,
+    justfyContent: 'center',
+    height: 20,
+    width: 40,
+    marginTop: 5,
     borderStyle: "solid",
     borderWidth: 30,
     borderColor: "gray",
-    borderRadius: 30,
+    borderRadius: 2,
     borderWidth: 1,
     textAlign: "center",
-    backgroundColor: "white",
+    backgroundColor: "light-gray",
   },
+  banner: {
+    fontSize: 25,
+    marginTop: 10,
+    marginBottom: 15,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: theme.cream,
+    alignItems: "center",
+    flexGrow: 1,
+    //width: 400,
+  },
+  inputs: {
+    flex: 1, 
+    flexDirection: 'row', 
+    justifyContent: 'space-between',
+  }
 });
 
 export default FoodDetailScreen;

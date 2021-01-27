@@ -65,7 +65,7 @@ const SignUpScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>BalancedPlate</Text>
+      <Text style={{ fontSize: 40, marginBottom: 15 }}>BalancedPlate</Text>
       <TextInput
         value={firstName}
         onChangeText={(name) => setFirstName(name)}

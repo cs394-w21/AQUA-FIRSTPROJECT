@@ -36,7 +36,7 @@ const PortionSizes = ({
       <Text>Portion Size:</Text>
       <Picker
         selectedValue={portionSize}
-        style={{ height: 50, width: 150 }}
+        style={styles.picker}
         onValueChange={(itemValue, itemIndex) => {
           setGramsPerPortion(portions[itemIndex][itemValue]);
           setPortionSize(itemValue);
@@ -55,4 +55,12 @@ const PortionSizes = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create ({
+  picker: {
+    height: 30,
+    width: 150,
+    marginTop: 5,
+  }
+});
 export default PortionSizes;
