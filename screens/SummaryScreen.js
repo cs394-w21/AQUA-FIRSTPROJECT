@@ -25,7 +25,8 @@ const SummaryScreen = () => {
 
     const handleData = (snapshot) => {
       if (snapshot.val()) {
-        setLog(snapshot.val());
+        var temp = snapshot.val();
+        setLog(temp);
       }
     };
     db.on("value", handleData, (error) => alert(error));
@@ -56,7 +57,11 @@ const SummaryScreen = () => {
       const built = Object.keys(log.foods).map((food) => log.foods[food].fdcId);
       fetchFoods(admin.apikey, built).then((value) => {
         if (!foods) {
-          setFoods(value);
+          var temp = value;
+          console.log(temp);
+          delete temp["0"];
+          console.log(temp);
+          setFoods(temp);
         }
       });
       //console.log(getFood(admin.apikey, "milk"));

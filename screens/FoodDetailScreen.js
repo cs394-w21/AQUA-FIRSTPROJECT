@@ -16,7 +16,12 @@ import NutritionDetails from "../components/NutritionDetails";
 
 const FoodDetailScreen = ({ route }) => {
   const [portionSize, setPortionSize] = useState("100 g");
-  const db = firebase.database().ref("users/1x2y3z/log");
+  const db =
+    firebase.auth() && firebase.auth().currentUser
+      ? firebase
+          .database()
+          .ref("users/" + firebase.auth().currentUser.uid + "/log")
+      : null;
   const naturalResult = route.params.result;
   const admin = route.params.admin;
   const [idResult, setIdResult] = useState(null);
@@ -85,7 +90,10 @@ const FoodDetailScreen = ({ route }) => {
           />
         </View>
       ) : (
-        <Text>Loading...</Text>
+        <View>
+          <Text>Loading... </Text>
+          <Text>(Sometimes it can take a long time.)</Text>
+        </View>
       )}
     </ScrollView>
   );
