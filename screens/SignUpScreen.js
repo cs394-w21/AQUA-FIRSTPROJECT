@@ -11,7 +11,7 @@ const newUser = {
   lastName: "",
   gender: "",
   log: {
-    foods: [-1],
+    foods: {},
   },
   weight: 0,
   weightUnit: "",

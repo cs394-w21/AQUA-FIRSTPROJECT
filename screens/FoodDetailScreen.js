@@ -35,15 +35,13 @@ const FoodDetailScreen = ({ route }) => {
   const buildDbObject = () => {
     const date = new Date();
 
-    const obj = {
+    return {
       fdcId: naturalResult.fdcId,
       grams: gramsPerPortion * quantity,
       quantity: quantity,
       quantityUnit: portionSize,
       time: date.toJSON(),
     };
-    console.log(obj);
-    return obj;
   };
 
   const writeToDb = () => {

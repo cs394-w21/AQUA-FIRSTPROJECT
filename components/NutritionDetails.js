@@ -14,7 +14,6 @@ const NutritionDetails = ({
   gramsPerPortion,
   quantity,
 }) => {
-  idResult ? console.log(idResult.brandOwner) : null;
   const grams = gramsPerPortion * quantity;
   const nutrients = () => {
     if (!idResult) return null;

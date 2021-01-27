@@ -27,7 +27,7 @@ const findNutrientNumInFoodNutrients = (num, foodNutrients) => {
 };
 
 const dailySumming = (log, foodResults) => {
-  //console.log(log);
+  console.log("FoodResults:", foodResults);
   const recentDates = Array(7)
     .fill()
     .map((_, index) => {
@@ -45,9 +45,17 @@ const dailySumming = (log, foodResults) => {
         return temp.getDate() == curr.getDate();
       })
       .map((logItem) => {
-        const nutrients =
-          foodResults[findIdInFoodResults(logItem.fdcId, foodResults)].foods[0]
-            .foodNutrients;
+        const nutrients = findIdInFoodResults(logItem.fdcId, foodResults)
+          ? foodResults[findIdInFoodResults(logItem.fdcId, foodResults)]
+              .foods[0].foodNutrients
+          : {
+              [PROTEIN]: 0,
+              [FAT]: 0,
+              [CARB]: 0,
+              [IRON]: 0,
+              [VIT_A]: 0,
+              [VIT_C]: 0,
+            };
         let currDay = new Date(logItem.time);
         //console.log(nutrients);
         return {
@@ -176,8 +184,10 @@ export const weeklyDeficiencies = (weeklySums) => {
   const nutrients = ["Vitamin A", "Vitamin C", "Calcium", "Iron"];
 
   const deficiencies = nutrients.map((nutrient) => {
+    /*
     console.log("actual", nutrient, weeklySums[nutrient]);
     console.log("recc", nutrient, weeklyDV[nutrient]);
+    */
     return weeklySums[nutrient] <= weeklyDV[nutrient] ? nutrient : null;
   });
   return deficiencies;

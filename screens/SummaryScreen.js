@@ -23,13 +23,14 @@ const SummaryScreen = () => {
             .ref("users/" + firebase.auth().currentUser.uid + "/log")
         : null;
 
-    const handleData = (snapshot) => {
-      if (snapshot.val()) {
-        var temp = snapshot.val();
-        setLog(temp);
+    const handleData = (snap) => {
+      if (snap.val()) {
+        setLog(snap.val());
+      } else {
+        setLog({});
       }
     };
-    db.on("value", handleData, (error) => alert(error));
+    db.on("value", handleData, (error) => console.log(error));
     return () => {
       db.off("value", handleData);
     };
@@ -53,16 +54,16 @@ const SummaryScreen = () => {
   }, [foods]);
 
   useEffect(() => {
-    if (admin && log) {
+    console.log("setting foods?");
+    if (admin && log && log.foods) {
       const built = Object.values(log.foods).map((food) => food.fdcId);
       fetchFoods(admin.apikey, built).then((value) => {
+        setFoods(value);
+        /*
         if (!foods) {
-          var temp = value;
-          console.log("temp before delete: ", temp);
-          delete temp["0"];
-          console.log("temp: after delete", temp);
-          setFoods(temp);
+          setFoods(value);
         }
+        */
       });
     }
   }, [admin, log]);
@@ -75,18 +76,17 @@ const SummaryScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <View style={{ textAlign: "center" }}>
+        <Text style={{ fontSize: 30 }}>Weekly Summary</Text>
+      </View>
       {data ? (
         <>
-          <View style={{ textAlign: "center" }}>
-            <Text style={{ fontSize: 30 }}>Weekly Summary</Text>
-          </View>
-
           <WeeklyMacroChart data={data} />
           <VitaminsAndMinerals data={data} />
           <Recommendations data={data} />
         </>
       ) : (
-        <Text>Loading...</Text>
+        <WeeklyMacroChart data={[]} />
       )}
     </ScrollView>
   );
