@@ -54,17 +54,16 @@ const SummaryScreen = () => {
 
   useEffect(() => {
     if (admin && log) {
-      const built = Object.keys(log.foods).map((food) => log.foods[food].fdcId);
+      const built = Object.values(log.foods).map((food) => food.fdcId);
       fetchFoods(admin.apikey, built).then((value) => {
         if (!foods) {
           var temp = value;
-          console.log(temp);
+          console.log("temp before delete: ", temp);
           delete temp["0"];
-          console.log(temp);
+          console.log("temp: after delete", temp);
           setFoods(temp);
         }
       });
-      //console.log(getFood(admin.apikey, "milk"));
     }
   }, [admin, log]);
 
