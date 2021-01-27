@@ -16,11 +16,19 @@ const SummaryScreen = () => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    const db = firebase.database().ref("users/1x2y3z/log");
-    const handleData = (snap) => {
-      if (snap.val()) setLog(snap.val());
+    const db =
+      firebase.auth() && firebase.auth().currentUser
+        ? firebase
+            .database()
+            .ref("users/" + firebase.auth().currentUser.uid + "/log")
+        : null;
+
+    const handleData = (snapshot) => {
+      if (snapshot.val()) {
+        setLog(snapshot.val());
+      }
     };
-    db.on("value", handleData, (error) => console.log(error));
+    db.on("value", handleData, (error) => alert(error));
     return () => {
       db.off("value", handleData);
     };

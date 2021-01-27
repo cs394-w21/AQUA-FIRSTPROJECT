@@ -1,34 +1,83 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AddScreen from "./screens/AddScreen";
 import FoodDetailScreen from "./screens/FoodDetailScreen";
 import SummaryScreen from "./screens/SummaryScreen";
+import LoginScreen from "./screens/LoginScreen";
+import SignUpScreen from "./screens/SignUpScreen";
+import { firebase } from "./firebase";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const Login = createStackNavigator();
 
 const App = () => {
+  const [user, setUser] = useState(null);
+  const [auth, setAuth] = useState();
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((auth) => {
+      setAuth(auth);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (auth && auth.uid) {
+      const db = firebase.database().ref("users").child(auth.uid);
+      const handleData = (snap) => {
+        setUser({ uid: auth.uid, ...snap.val() });
+      };
+      db.on("value", handleData, (error) => alert(error));
+      return () => {
+        db.off("value", handleData);
+      };
+    } else {
+      setUser(null);
+    }
+  }, [auth]);
   return (
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen
-          component={logging}
-          name="Logging"
-          options={{
-            title: "Log Foods",
-          }}
+      <Login.Navigator>
+        <Login.Screen
+          component={LoginScreen}
+          name="LoginScreen"
+          options={{ title: "Login" }}
         />
-        <Tab.Screen
-          component={SummaryScreen}
-          name="Summary"
-          options={{
-            title: "Weekly Summary",
-          }}
+        <Login.Screen
+          component={SignUpScreen}
+          name="signup"
+          options={{ title: "Sign Up" }}
         />
-      </Tab.Navigator>
+        <Login.Screen
+          component={mainApp}
+          name="mainApp"
+          options={{ headerShown: false }}
+        />
+      </Login.Navigator>
     </NavigationContainer>
+  );
+};
+
+const mainApp = () => {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen
+        component={logging}
+        name="Logging"
+        options={{
+          title: "Log Foods",
+        }}
+      />
+      <Tab.Screen
+        component={SummaryScreen}
+        name="Summary"
+        options={{
+          title: "Weekly Summary",
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 
