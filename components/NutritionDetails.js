@@ -1,3 +1,4 @@
+import { style } from "d3";
 import React from "react";
 import {
   StyleSheet,
@@ -7,6 +8,15 @@ import {
   ScrollView,
   SafeAreaView,
 } from "react-native";
+
+const NutrientInfo = ({n, idx, grams}) => (
+  <View style={styles.nutrientInfo}>
+    <Text key={idx}>
+      {n.nutrient.name}: {((n.amount * grams) / 100).toFixed(2)}{" "}
+      {n.nutrient.unitName}
+    </Text>
+  </View>
+); 
 
 const NutritionDetails = ({
   idResult,
@@ -19,13 +29,15 @@ const NutritionDetails = ({
     if (!idResult) return null;
     return (
       <>
-        <Text>Nutrients:</Text>
+        <Text style={{fontSize: 20, marginTop: 10, marginBottom: 10}}>Nutrients:</Text>
         {idResult.foodNutrients.map((n, idx) => {
+          console.log("nutrient", n);
           return (
-            <Text key={idx}>
-              {n.nutrient.name}: {(n.amount * grams) / 100}{" "}
-              {n.nutrient.unitName}
-            </Text>
+            ('amount' in n) ?
+            <NutrientInfo n={n} idx={idx} grams={grams}>
+            </NutrientInfo>
+            :
+            null
           );
         })}
       </>
@@ -43,4 +55,16 @@ const NutritionDetails = ({
     </View>
   ) : null;
 };
+
+const styles = StyleSheet.create ({
+  nutrientInfo: {
+    borderStyle: 'solid',
+    borderWidth: '1px',
+    borderColor: 'black',
+    flex: 1,
+    fontSize: 15,
+  },
+});
+
+
 export default NutritionDetails;

@@ -38,8 +38,8 @@ const LoginScreen = ({ navigation }) => {
   }
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 40 }}>BalancedPlate</Text>
-      <Text style={{ fontSize: 30 }}>Login</Text>
+      <Text style={{ fontSize: 40, marginBottom: 15 }}>BalancedPlate</Text>
+      <Text style={{ fontSize: 25, marginBottom: 5 }}>Login</Text>
       <TextInput
         value={email}
         onChangeText={(email) => setEmail(email)}
@@ -55,7 +55,7 @@ const LoginScreen = ({ navigation }) => {
       />
       <View style={{ flexDirection: "column" }}>
         <Button title={"Login"} style={styles.input} onPress={onLogin} />
-        <TouchableOpacity onPress={() => navigation.navigate("signup")}>
+        <TouchableOpacity onPress={() => navigation.navigate("signup")} style={{ marginTop: 5 }}>
           <Text>Sign Up</Text>
         </TouchableOpacity>
       </View>
