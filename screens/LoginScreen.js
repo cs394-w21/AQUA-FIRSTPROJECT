@@ -9,6 +9,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { firebase } from "../firebase";
+import theme from "../utils/theme";
 
 const db = firebase.database().ref("users");
 
@@ -39,7 +40,6 @@ const LoginScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 40, marginBottom: 15 }}>BalancedPlate</Text>
-      <Text style={{ fontSize: 25, marginBottom: 5 }}>Login</Text>
       <TextInput
         value={email}
         onChangeText={(email) => setEmail(email)}
@@ -53,9 +53,25 @@ const LoginScreen = ({ navigation }) => {
         secureTextEntry={true}
         style={styles.input}
       />
-      <View style={{ flexDirection: "column" }}>
-        <Button title={"Login"} style={styles.input} onPress={onLogin} />
-        <TouchableOpacity onPress={() => navigation.navigate("signup")} style={{ marginTop: 5 }}>
+      <View
+        style={{
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <TouchableOpacity
+          title={"Login"}
+          style={styles.loginButton}
+          onPress={onLogin}
+        >
+          <Text>LOG IN</Text>
+        </TouchableOpacity>
+        <Text>Don't have an account?</Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("signup")}
+          style={styles.signupButton}
+        >
           <Text>Sign Up</Text>
         </TouchableOpacity>
       </View>
@@ -69,7 +85,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#ecf0f1",
+    backgroundColor: theme.cream,
   },
   input: {
     width: 200,
@@ -79,6 +95,22 @@ const styles = StyleSheet.create({
     borderColor: "black",
     marginHorizontal: 10,
     marginBottom: 10,
+    borderRadius: 10,
+  },
+  loginButton: {
+    padding: 10,
+    marginHorizontal: 10,
+    marginBottom: 10,
+    backgroundColor: theme.lightGreen,
+    borderRadius: 10,
+  },
+  signupButton: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: theme.lightGreen,
+    marginHorizontal: 10,
+    marginBottom: 10,
+    borderRadius: 10,
   },
 });
 

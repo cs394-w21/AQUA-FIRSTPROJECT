@@ -1,6 +1,15 @@
 import React, { useState } from "react";
-import { Button, Image, Text, TextInput, View, StyleSheet } from "react-native";
+import {
+  Button,
+  Image,
+  Text,
+  TextInput,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { firebase } from "../firebase";
+import theme from "../utils/theme";
 
 const db = firebase.database().ref("users");
 
@@ -98,7 +107,9 @@ const SignUpScreen = ({ navigation }) => {
         secureTextEntry={true}
         style={styles.input}
       />
-      <Button title={"Sign Up"} style={styles.input} onPress={onSignUp} />
+      <TouchableOpacity onPress={onSignUp} style={styles.signupButton}>
+        <Text>SIGN UP</Text>
+      </TouchableOpacity>
       <Text>{signupError}</Text>
     </View>
   );
@@ -109,7 +120,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#ecf0f1",
+    backgroundColor: theme.cream,
   },
   input: {
     width: 200,
@@ -119,12 +130,14 @@ const styles = StyleSheet.create({
     borderColor: "black",
     marginHorizontal: 10,
     marginBottom: 10,
+    borderRadius: 10,
   },
-  roleSelect: {
-    backgroundColor: "white",
-    padding: 5,
-    borderBottomWidth: 2,
-    width: 125,
+  signupButton: {
+    padding: 10,
+    backgroundColor: theme.lightGreen,
+    marginHorizontal: 10,
+    marginBottom: 10,
+    borderRadius: 10,
   },
 });
 
