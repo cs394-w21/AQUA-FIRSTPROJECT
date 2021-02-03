@@ -75,12 +75,12 @@ const FoodDetailScreen = ({ route }) => {
               setPortionSize={setPortionSize}
               setGramsPerPortion={setGramsPerPortion}
             />
-            </View>
+          </View>
           <TouchableOpacity
             style={styles.addButton}
             onPress={() => writeToDb()}
           >
-            <Text style={{fontSize: 15}}>Add</Text>
+            <Text style={{ fontSize: 15 }}>Add</Text>
           </TouchableOpacity>
           <NutritionDetails
             idResult={idResult}
@@ -101,7 +101,7 @@ const FoodDetailScreen = ({ route }) => {
 
 const styles = StyleSheet.create({
   addButton: {
-    justfyContent: 'center',
+    justifyContent: "center",
     height: 20,
     width: 40,
     marginTop: 5,
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     borderWidth: 1,
     textAlign: "center",
-    backgroundColor: "light-gray",
+    backgroundColor: "red",
   },
   banner: {
     fontSize: 25,
@@ -126,10 +126,10 @@ const styles = StyleSheet.create({
     //width: 400,
   },
   inputs: {
-    flex: 1, 
-    flexDirection: 'row', 
-    justifyContent: 'space-between',
-  }
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
 });
 
 export default FoodDetailScreen;
