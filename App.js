@@ -9,6 +9,7 @@ import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import { firebase } from "./firebase";
 
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Login = createStackNavigator();
@@ -37,9 +38,11 @@ const App = () => {
       setUser(null);
     }
   }, [auth]);
+
   return (
     <NavigationContainer>
       <Login.Navigator>
+        
         <Login.Screen
           component={LoginScreen}
           name="LoginScreen"
@@ -55,6 +58,7 @@ const App = () => {
           name="mainApp"
           options={{ headerShown: false }}
         />
+        
       </Login.Navigator>
     </NavigationContainer>
   );
