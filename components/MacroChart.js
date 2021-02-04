@@ -1,130 +1,152 @@
-import React, { useEffect, useRef } from "react";
-import { View } from "react-native";
+import React from "react";
 import { Svg, G, Line, Rect, Text } from "react-native-svg";
-import {
-  select,
-  scaleBand,
-  axisBottom,
-  stack,
-  max,
-  scaleLinear,
-  axisLeft,
-  stackOrderAscending,
-} from "d3";
+import * as d3 from "d3";
+import theme from '../utils/theme';
 
-/**
- * Component that renders a StackedBarChart
- */
+const GRAPH_MARGIN = 20;
+const GRAPH_BAR_WIDTH = 20;
+const colors = {
+  axis: "#E4E4E4",
+  bars: "#15AD13",
+};
 
-function MacroChart({ data, keys, colors }) {
-  const svgRef = useRef();
-  const wrapperRef = useRef();
 
-  // will be called initially and on every data change
-  useEffect(() => {
-    const svg = select(svgRef.current);
-    const width = 300;
-    const height = 300;
+const dates = [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const today = new Date();
+let weekInt = today.getDay() + 1;
+let inOrder = [];
+while (inOrder.length != 7) {
+  inOrder.push(weekInt);
+  weekInt = (weekInt + 1) % 7;
+}
 
-    // stacks / layers
-    const stackGenerator = stack().keys(keys).order(stackOrderAscending);
-    const layers = stackGenerator(data);
-    const extent = [
-      0,
-      max(layers, (layer) => max(layer, (sequence) => sequence[1])),
-    ];
+const MacroChart = ({ data }) => {
 
-    // scales
-    /*
-    const xScale = scaleBand()
-      .domain(data.map((d) => d.year))
-      .range([0, width])
-      .padding(0.25);
-      */
-    const xScale = scaleBand()
-      .domain(data.map((d) => d.label))
-      .range([0, width]);
-    const yScale = scaleLinear().domain([height, 0]);
-    //const yScale = scaleLinear().domain(extent).range([height, 0]);
+  // Dimensions
+  const SVGHeight = 300;
+  const SVGWidth = 350;
+  const graphHeight = SVGHeight - 2 * GRAPH_MARGIN;
+  const graphWidth = SVGWidth - 2 * GRAPH_MARGIN;
 
-    // rendering
-    svg
-      .selectAll(".layer")
-      .style("border", "1px solid black")
-      .data(layers)
-      .join("G")
-      .attr("class", "layer")
-      .attr("fill", (layer) => colors[layer.key])
-      .selectAll("rect")
-      .data((layer) => layer)
-      .join("rect")
-      .attr("x", (sequence) => xScale(sequence.data.year))
-      .attr("width", xScale.bandwidth())
-      .attr("y", (sequence) => yScale(sequence[1]))
-      .attr("height", (sequence) => yScale(sequence[0]) - yScale(sequence[1]));
+  // X scale point
+  const xDomain = data.map((item, index) => index);
+  const xRange = [0, graphWidth];
+  const x = d3.scalePoint().domain(xDomain).range(xRange).padding(1);
 
-    // axes
-    const xAxis = axisBottom(xScale)
-      .ticks(data.length)
-      .tickFormat((index) => index + 1);
-    svg
-      .select(".x-axis")
-      .attr("transform", `translate(0, ${height})`)
-      .call(xAxis);
-
-    const yAxis = axisLeft(yScale);
-    svg.select(".y-axis").call(yAxis);
-  }, [colors, data, keys]);
+  // Y scale linear
+  const space_on_top_lol = 6;
+  const dataMax = d3.max(data, (d) => d.protein + d.carbohydrate + d.fat);
+  const yDomain = [0, dataMax + space_on_top_lol];
+  const yRange = [0, graphHeight];
+  const y = d3.scaleLinear().domain(yDomain).range(yRange);
+  const dataTicks = [];
+  for (let i = 0; i < dataMax + 100; i = i + 100) {
+    dataTicks.push(i);
+  }
+  const space_on_left_lol = 6;
+  const space_at_start_lol = 27;
 
   return (
-    <>
-      <View
-        ref={wrapperRef}
-        style={{
-          marginBottom: "2rem",
-          borderWidth: 1,
-          borderColor: "purple",
-          borderStyle: "solid",
-        }}
-      >
-        <Svg
-          ref={svgRef}
-          style={{ borderWidth: 1, borderColor: "black", borderStyle: "solid" }}
-        >
-          <G className="x-axis" />
-          <G className="y-axis" />
-        </Svg>
-      </View>
-    </>
+    <Svg width={SVGWidth} height={SVGHeight}>
+      <G y={graphHeight}>
+        {/* y axis */}
+        <Line
+          x1={space_at_start_lol}
+          y1="2"
+          x2={space_at_start_lol}
+          y2={graphHeight * -1}
+          stroke={colors.axis}
+          strokeWidth="0.5"
+        />
+        <G origin={(5, graphHeight * -0.5)}>
+          <Text
+            fontSize="8"
+            x={graphHeight * 0.5}
+            y="6"
+            textAnchor="middle"
+            style={{ hefontSize: 200, transform: [{ rotate: "270deg" }] }}
+          >
+            Calories
+          </Text>
+        </G>
+
+        {/* ticks */}
+        {dataTicks.map((tick) => {
+          return (
+            <G key={tick}>
+              <Text
+                fontSize="8"
+                x={space_at_start_lol - 2}
+                y={-y(tick) + 2}
+                textAnchor="end"
+                style={{ hefontSize: 200 }}
+              >
+                {tick}
+              </Text>
+              <Line
+                x1={space_at_start_lol}
+                y1={-y(tick)}
+                x2={graphWidth}
+                y2={-y(tick)}
+                stroke={colors.axis}
+                strokeWidth="0.5"
+              />
+            </G>
+          );
+        })}
+
+        {/* bars */}
+        {data.map((item, index) => (
+          <G key={index}>
+            <Rect
+              x={x(index) - GRAPH_BAR_WIDTH / 2 + space_on_left_lol}
+              y={y(Number(item.protein + item.carbohydrate)) * -1}
+              width={GRAPH_BAR_WIDTH}
+              height={y(item.protein)}
+              fill={theme['red']}
+            />
+            <Rect
+              x={x(index) - GRAPH_BAR_WIDTH / 2 + space_on_left_lol}
+              y={y(Number(item.fat + item.carbohydrate + item.protein)) * -1}
+              width={GRAPH_BAR_WIDTH}
+              height={y(item.fat)}
+              fill={theme['orange']}
+            />
+            <Rect
+              x={x(index) - GRAPH_BAR_WIDTH / 2 + space_on_left_lol}
+              y={y(Number(item.carbohydrate)) * -1}
+              width={GRAPH_BAR_WIDTH}
+              height={y(item.carbohydrate)}
+              fill={theme['lightYellow']}
+            />
+          </G>
+        ))}
+        {/* x axis */}
+
+        <Line
+          x1={space_at_start_lol}
+          y1="0"
+          x2={graphWidth}
+          y2="0"
+          stroke={colors.axis}
+          strokeWidth="1"
+        />
+        {/* x axis labels */}
+        {data.map((item, index) => (
+          <Text
+            key={"label" + index}
+            fontSize="8"
+            x={x(index) + space_on_left_lol}
+            y="10"
+            textAnchor="middle"
+            //style={{ heFontSize: 200 }}
+          >
+            {dates[inOrder[index]] + '.'}
+          </Text>
+        ))}
+      </G>
+    </Svg>
+
   );
-}
-
-/*
-function bars(scale) {
-  const margin = 10,
-    width = 100,
-    height = 60,
-    chart = <Svg width={width + 2 * margin} height={height + 2 * margin}>
-        <G transform="translate(${margin}, ${margin})">
-            <Rect width=${width} height="${height}"
- fill="none" stroke="black" stroke-width="0.5" />
-
-<rect x="${scale("one")}" width=${scale.bandwidth()} height="${height}"
- fill="red"/>
-
-<rect x="${scale("two")}" width=${scale.bandwidth()} height="${height}"
- fill="green"/>
-
-<rect x="${scale("three")}" width=${scale.bandwidth()} height="${height}"
- fill="blue" />
-
-<rect x="${scale("four")}" width=${scale.bandwidth()} height="${height}"
- fill="#777" />
-
-</g></svg>`;
-
-  return chart;
-}
-*/
-
+};
 export default MacroChart;

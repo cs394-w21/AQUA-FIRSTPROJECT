@@ -8,16 +8,14 @@ import SummaryScreen from "./screens/SummaryScreen";
 import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import { firebase } from "./firebase";
-import { SafeAreaView, Text } from "react-native";
-//import MacroChart from "./components/MacroChart";
-import MacroChart from "./components/OldMacroChart";
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Login = createStackNavigator();
 
 const App = () => {
-  const [user, setUser] = useState("HfcKAa46gwMgH1EmUEIGM3uoTaK2");
+  const [user, setUser] = useState(null);
   const [auth, setAuth] = useState();
 
   useEffect(() => {
@@ -42,61 +40,9 @@ const App = () => {
   }, [auth]);
 
   return (
-    <SafeAreaView style={{ marginLeft: 50 }}>
-      <Text>Calories by day</Text>
-      <MacroChart
-        //keys={["apples", "bananas", "dates"]}
-        //colors={["red", "yellow", "brown"]}
-        data={[
-          {
-            label: "Jan",
-            apples: 2000,
-            bananas: 30,
-            dates: 30,
-          },
-          {
-            label: "Feb",
-            apples: 30,
-            bananas: 15,
-            dates: 4,
-          },
-          {
-            label: "Mar",
-            apples: 30,
-            bananas: 15,
-            dates: 4,
-          },
-          {
-            label: "Apr",
-            apples: 30,
-            bananas: 15,
-            dates: 4,
-          },
-          {
-            label: "Jun",
-            apples: 30,
-            bananas: 15,
-            dates: 4,
-          },
-          {
-            label: "Jul",
-            apples: 30,
-            bananas: 15,
-            dates: 4,
-          },
-          {
-            label: "Aug",
-            apples: 30,
-            bananas: 15,
-            dates: 4,
-          },
-        ]}
-      />
-    </SafeAreaView>
-    /*
-
     <NavigationContainer>
       <Login.Navigator>
+        
         <Login.Screen
           component={LoginScreen}
           name="LoginScreen"
@@ -112,9 +58,9 @@ const App = () => {
           name="mainApp"
           options={{ headerShown: false }}
         />
+        
       </Login.Navigator>
     </NavigationContainer>
-    */
   );
 };
 
