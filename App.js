@@ -8,7 +8,7 @@ import SummaryScreen from "./screens/SummaryScreen";
 import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import { firebase } from "./firebase";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, Text } from "react-native";
 //import MacroChart from "./components/MacroChart";
 import MacroChart from "./components/OldMacroChart";
 
@@ -19,13 +19,13 @@ const Login = createStackNavigator();
 const App = () => {
   const [user, setUser] = useState("HfcKAa46gwMgH1EmUEIGM3uoTaK2");
   const [auth, setAuth] = useState();
-  /*
+
   useEffect(() => {
     firebase.auth().onAuthStateChanged((auth) => {
       setAuth(auth);
     });
   }, []);
- 
+
   useEffect(() => {
     if (auth && auth.uid) {
       const db = firebase.database().ref("users").child(auth.uid);
@@ -40,22 +40,17 @@ const App = () => {
       setUser(null);
     }
   }, [auth]);
-  */
+
   return (
-    <SafeAreaView
-      style={
-        {
-          /*marginVertical: 0, marginHorizontal: "auto"*/
-        }
-      }
-    >
+    <SafeAreaView style={{ marginLeft: 50 }}>
+      <Text>Calories by day</Text>
       <MacroChart
         //keys={["apples", "bananas", "dates"]}
         //colors={["red", "yellow", "brown"]}
         data={[
           {
             label: "Jan",
-            apples: 30,
+            apples: 2000,
             bananas: 30,
             dates: 30,
           },
@@ -77,10 +72,29 @@ const App = () => {
             bananas: 15,
             dates: 4,
           },
+          {
+            label: "Jun",
+            apples: 30,
+            bananas: 15,
+            dates: 4,
+          },
+          {
+            label: "Jul",
+            apples: 30,
+            bananas: 15,
+            dates: 4,
+          },
+          {
+            label: "Aug",
+            apples: 30,
+            bananas: 15,
+            dates: 4,
+          },
         ]}
       />
     </SafeAreaView>
     /*
+
     <NavigationContainer>
       <Login.Navigator>
         <Login.Screen
