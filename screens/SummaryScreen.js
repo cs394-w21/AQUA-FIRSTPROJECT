@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.cream,
     alignItems: "center",
     //justifyContent: "space-evenly",
+    overflowX: 'scroll'
   },
 });
 

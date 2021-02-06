@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, ScrollView } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView } from "react-native";
 import theme from "../utils/theme";
 
 const SearchResult = ({ result, toDetails }) => {
@@ -18,6 +18,7 @@ const SearchResult = ({ result, toDetails }) => {
 
 const SearchResults = ({ results, toDetails }) => {
   return results.hasOwnProperty("foods") ? (
+    <SafeAreaView>
     <ScrollView contentContainerStyle={styles.searchResults}>
       {results.foods.map((result) => {
         return (
@@ -29,11 +30,13 @@ const SearchResults = ({ results, toDetails }) => {
         );
       })}
     </ScrollView>
+    </SafeAreaView>
   ) : null;
 };
 
 const styles = StyleSheet.create({
   container: {
+    height: 'auto',
     flex: 1,
     backgroundColor: theme.cream,
     margin: "auto",
@@ -47,8 +50,9 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 5,
     borderWidth: 2,
-    borderColor: "black",
+    borderColor: "grey",
     borderStyle: "solid",
+    backgroundColor: 'white',
     borderRadius: 30,
     marginHorizontal: 5,
     width: 300,

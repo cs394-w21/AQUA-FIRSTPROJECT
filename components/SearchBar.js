@@ -20,7 +20,15 @@ const SearchBar = ({ admin, results, setResults }) => {
   }, [results]);
 
   return (
-    <View>
+    <View style={{    
+      borderWidth: 1, 
+      borderStyle: 'solid', 
+      borderColor: 'black', 
+      marginBottom: 50, 
+      marginHorizontal: 50,
+      borderRadius: 10,
+      justifyContent: 'center'
+      }}>
       <TextInput
         style={styles.searchBar}
         onChangeText={(text) => onChangeText(text)}
@@ -37,12 +45,12 @@ const styles = StyleSheet.create({
   searchBar: {
     height: 40,
     borderStyle: "solid",
-    borderWidth: 30,
-    borderColor: "gray",
-    borderRadius: 10,
     borderWidth: 1,
-    marginBottom: 50,
-    marginHorizontal: 50,
+    borderColor: "black",
+    borderRadius: 10,
+    border: 1,
+    //marginBottom: 50,
+    //marginHorizontal: 50,
     textAlign: "center",
   },
 });

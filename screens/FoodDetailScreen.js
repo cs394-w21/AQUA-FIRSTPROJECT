@@ -108,10 +108,10 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderWidth: 30,
     borderColor: "gray",
-    borderRadius: 2,
+    borderRadius: 10,
     borderWidth: 1,
     textAlign: "center",
-    backgroundColor: "red",
+    backgroundColor: theme.lightYellow,
   },
   banner: {
     fontSize: 25,
@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.cream,
     alignItems: "center",
     flexGrow: 1,
+    overflowX: 'scroll'
     //width: 400,
   },
   inputs: {

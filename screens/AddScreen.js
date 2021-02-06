@@ -13,6 +13,7 @@ const AddScreen = ({ navigation }) => {
     navigation.navigate("FoodDetailScreen", { result, admin });
   };
 
+
   useEffect(() => {
     const db = firebase.database().ref("admin");
     const handleData = (snap) => {
@@ -29,14 +30,14 @@ const AddScreen = ({ navigation }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Banner></Banner>
-      <SafeAreaView styles={{ width: 300, justifyContent: "center" }}>
+      <View styles={{ width: 300, justifyContent: "center", backgroundColor: theme.cream}}>
         <SearchBar
           admin={admin}
           results={results}
           setResults={setResults}
         ></SearchBar>
         <SearchResults toDetails={toDetails} results={results}></SearchResults>
-      </SafeAreaView>
+      </View>
     </ScrollView>
   );
 };
@@ -56,8 +57,10 @@ const styles = StyleSheet.create({
     margin: "auto",
     alignItems: "center",
     justifyContent: "flex-start",
-    width: 400,
+    width: "100%",
+    height: "auto",
     flexGrow: 1,
+    overflowX: 'scroll',
   },
   banner: {
     marginTop: 100,
