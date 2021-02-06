@@ -91,7 +91,7 @@ const logging = () => {
       <Stack.Screen
         name="AddScreen"
         component={AddScreen}
-        options={{ title: "Food Search" }}
+        options={{ title: "Food Search", headerShown: false }}
       />
       <Stack.Screen
         name="FoodDetailScreen"
