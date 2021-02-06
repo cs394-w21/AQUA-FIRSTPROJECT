@@ -59,14 +59,17 @@ const Recommendations = ({ data }) => {
   const deficiencies = weeklyDeficiencies(weeklyNutrients);
   return (
     <View style={styles.container}>
+      
       <Text
         style={{ marginBottom: "10px", marginTop: "10px", textAlign: "center" }}
       >
         Recommendations
       </Text>
+      <View style={{maxWidth: 500}}>
       {deficiencies.map((deficiency) => {
         return recs[deficiency];
       })}
+      </View>
     </View>
   );
 };
@@ -76,9 +79,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.cream,
     alignItems: "center",
     justifyContent: "center",
-    flexDirection: "row",
+    flexDirection: "column",
     flexWrap: "wrap",
-    maxWidth: "300px",
   },
 });
 export default Recommendations;

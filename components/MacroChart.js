@@ -10,16 +10,9 @@ const colors = {
   bars: "#15AD13",
 };
 
-
-const dates = [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const today = new Date();
-let weekInt = today.getDay() + 1;
-let inOrder = [];
-while (inOrder.length != 7) {
-  inOrder.push(weekInt);
-  weekInt = (weekInt + 1) % 7;
-}
-
+const dates = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const weekInt = new Date().getDay() + 1;
+  const inOrder = [...Array(7)].map((_, ind) => (ind + weekInt) % 7);
 const MacroChart = ({ data }) => {
 
   // Dimensions

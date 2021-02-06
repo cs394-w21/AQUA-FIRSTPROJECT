@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { firebase } from "../firebase.js";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, SafeAreaView } from "react-native";
 import { getFood, fetchFoods } from "../utils/usda";
 import VitaminsAndMinerals from "../components/VitaminsAndMinerals";
 import theme from "../utils/theme";
@@ -20,7 +20,7 @@ const Legend = () => {
     <View style={{flexDirection: 'row'}}>
       {Object.keys(keys).map((name) => {
         return (
-          <View style={{flexDirection: 'row', padding: 5, alignItems: 'center'}}>
+          <View style={{flexDirection: 'row', padding: 5, alignItems: 'center'}} key={name}>
             <View style={{backgroundColor: keys[name], width: 10, height: 10}}></View>
             <Text>
               {' ' + name + ' '}
@@ -107,11 +107,11 @@ const SummaryScreen = () => {
       </View>
       
       {data ? (
-        <>
+        <SafeAreaView style={{alignItems: 'center', justifyContent: 'center'}}>
           <MacroChart data={data} />
           <VitaminsAndMinerals data={data} />
           <Recommendations data={data} />
-        </>
+        </SafeAreaView>
       ) : (
         null
         //<WeeklyMacroChart data={[]} />

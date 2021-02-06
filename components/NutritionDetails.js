@@ -11,7 +11,7 @@ import {
 
 const NutrientInfo = ({ n, idx, grams }) => (
   <View style={styles.nutrientInfo}>
-    <Text key={idx}>
+    <Text >
       {n.nutrient.name}: {((n.amount * grams) / 100).toFixed(2)}{" "}
       {n.nutrient.unitName}
     </Text>
@@ -35,7 +35,7 @@ const NutritionDetails = ({
         {idResult.foodNutrients.map((n, idx) => {
           console.log("nutrient", n);
           return "amount" in n ? (
-            <NutrientInfo n={n} idx={idx} grams={grams}></NutrientInfo>
+            <NutrientInfo n={n} key={idx} idx={idx} grams={grams}></NutrientInfo>
           ) : null;
         })}
       </>
