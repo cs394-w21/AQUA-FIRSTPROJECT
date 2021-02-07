@@ -8,7 +8,7 @@ import SummaryScreen from "./screens/SummaryScreen";
 import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import { firebase } from "./firebase";
-
+import { MaterialIcons } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -72,6 +72,9 @@ const mainApp = () => {
         name="Logging"
         options={{
           title: "Log Foods",
+          tabBarIcon: () => (
+            <MaterialIcons name="create" size={20}/>
+          ),
         }}
       />
       <Tab.Screen
@@ -79,6 +82,9 @@ const mainApp = () => {
         name="Summary"
         options={{
           title: "Weekly Summary",
+          tabBarIcon: () => (
+            <MaterialIcons name="leaderboard" size={20}/>
+          ),
         }}
       />
     </Tab.Navigator>

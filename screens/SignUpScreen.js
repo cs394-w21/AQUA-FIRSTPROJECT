@@ -58,7 +58,7 @@ const SignUpScreen = ({ navigation }) => {
       db.update({
         [user]: { ...newUser, firstName: firstName, lastName: lastName },
       });
-      navigation.navigate("mainApp", { screen: "Summary" });
+      navigation.navigate("mainApp", { screen: "Logging" });
     };
     firebase
       .auth()
