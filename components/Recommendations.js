@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import theme from "../utils/theme";
 import { weeklySums, weeklyDeficiencies } from "../utils/dailySumming";
-const recs = {
+export const recs = {
   Calcium: (
     <Text
       style={{

@@ -1,11 +1,15 @@
 import React from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import theme from "../utils/theme";
 import { weeklyDeficiencies, weeklySums } from "../utils/dailySumming";
 
-const Badge = ({ nutrient, deficient }) => {
+const Badge = ({ nutrient, deficient, setIsOpen, setNutrient }) => {
+  function activate() {
+    setIsOpen(true);
+    setNutrient(nutrient);
+  }
   return (
-    <View style={deficient ? styles.BadgeBad : styles.BadgeGood}>
+    <TouchableOpacity style={deficient ? styles.BadgeBad : styles.BadgeGood} onPress={() => activate()}>
       {deficient ? (
         <Image
           style={{ height: 20, width: 20 }}
@@ -16,13 +20,13 @@ const Badge = ({ nutrient, deficient }) => {
         />
       ) : null}
       <Text>{nutrient}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 const initialChips = ["Vitamin A", "Vitamin C", "Calcium", "Iron"];
 
-const VitaminsAndMinerals = ({ data }) => {
+const VitaminsAndMinerals = ({ data, setIsOpen, setNutrient }) => {
   const weeklyNutrients = weeklySums(data);
   const deficiencies = weeklyDeficiencies(weeklyNutrients);
   return (
@@ -33,6 +37,8 @@ const VitaminsAndMinerals = ({ data }) => {
       {initialChips.map((nutrient) => {
         return (
           <Badge
+            setIsOpen={setIsOpen}
+            setNutrient={setNutrient}
             key={nutrient}
             deficient={deficiencies.includes(nutrient)}
             nutrient={nutrient}

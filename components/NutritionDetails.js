@@ -28,17 +28,17 @@ const NutritionDetails = ({
   const nutrients = () => {
     if (!idResult) return null;
     return (
-      <>
+      <React.Fragment>
         <Text style={{ fontSize: 20, marginTop: 10, marginBottom: 10 }}>
           Nutrients:
         </Text>
-        {idResult.foodNutrients.map((n, idx) => {
+        {idResult.foodNutrients ? idResult.foodNutrients.map((n, idx) => {
           console.log("nutrient", n);
           return "amount" in n ? (
             <NutrientInfo n={n} key={idx} idx={idx} grams={grams}></NutrientInfo>
           ) : null;
-        })}
-      </>
+        }) : <Text>sorry! the usda does not provide any data for this food!</Text>}
+      </React.Fragment>
     );
   };
   const brand = () => {

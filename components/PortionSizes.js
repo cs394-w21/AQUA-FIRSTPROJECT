@@ -10,7 +10,7 @@ const PortionSizes = ({
   setGramsPerPortion,
 }) => {
   const determinePortionOptions = () => {
-    if (idResult.foodPortions.length == 0) {
+    if (!idResult.foodPortions) {
       return [{ "100 g": 100 }];
     }
     const portions = Object.values(idResult.foodPortions).map((p) => {

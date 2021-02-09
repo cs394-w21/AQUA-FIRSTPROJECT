@@ -103,14 +103,14 @@ const MacroChart = ({ data }) => {
               y={y(Number(item.fat + item.carbohydrate + item.protein)) * -1}
               width={GRAPH_BAR_WIDTH}
               height={y(item.fat)}
-              fill={theme['orange']}
+              fill={theme['lightYellow']}
             />
             <Rect
               x={x(index) - GRAPH_BAR_WIDTH / 2 + space_on_left_lol}
               y={y(Number(item.carbohydrate)) * -1}
               width={GRAPH_BAR_WIDTH}
               height={y(item.carbohydrate)}
-              fill={theme['lightYellow']}
+              fill={theme['orange']}
             />
           </G>
         ))}
