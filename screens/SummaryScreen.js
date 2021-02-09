@@ -53,7 +53,7 @@ const DeficiencyModal = ({nutrient, isOpen, setIsOpen}) => {
     style={{
       flex: 1,
       justifyContent: "center",
-      alignItems: "center",
+      //alignItems: "center",
       position: "absolute",
       height: "100%",
       width: "100%",
