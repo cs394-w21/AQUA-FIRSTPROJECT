@@ -153,7 +153,11 @@ const SummaryScreen = () => {
             <VitaminsAndMinerals data={data} setIsOpen={setIsOpen} setNutrient={setNutrient} />
           </SafeAreaView>
         ) : (
-          null
+          <View style={{alignItems: "center"}}>
+            <Text style={{fontSize: 20, marginBottom: 10}}>Don't see anything?</Text>
+            <Text>Your data may be loading...</Text>
+            <Text style={{marginBottom: 200, marginTop: 2}}>Or, if you're a new user, there's nothing to show! Log a food to get started.</Text>
+          </View>
           //<WeeklyMacroChart data={[]} />
         )}
 
